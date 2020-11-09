@@ -2,7 +2,7 @@ import sys
 
 import pandas as pd
 
-from airline_tweet_sentiment.Config import Config
+from airline_tweet_sentiment.config import Config
 
 
 # TODO add docstrings for functions
