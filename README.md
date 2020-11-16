@@ -14,8 +14,11 @@ negative tweets quicker.
 
 ## Data
 
-The original data consists of messages from multiple sources and the annotated categories:
+The original data consists of messages from multiple sources and the annotated categories and was sourced from Kaggle:
 https://www.kaggle.com/crowdflower/twitter-airline-sentiment
+
+Data has been saved in this repository:
+**data/Tweets.csv**
 
 ## Model
 
