@@ -14,12 +14,12 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.base import BaseEstimator, TransformerMixin
 import nltk
 
+from airline_tweet_sentiment.config import Config
+
 nltk.download(['punkt', 'wordnet', 'averaged_perceptron_tagger'])
 
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
-
-from airline_tweet_sentiment.config import Config
 
 
 class StartingNounExtractor(BaseEstimator, TransformerMixin):
@@ -93,8 +93,8 @@ def build_model() -> GridSearchCV:
     # specify parameters for grid search
     parameters = {
         'features__text_pipeline__tfidf__smooth_idf': (True, False),
-        #'clf__estimator__warm_start': (True, False),
-        #'clf__estimator__min_samples_leaf': [2, 3, 4],
+        # 'clf__estimator__warm_start': (True, False),
+        # 'clf__estimator__min_samples_leaf': [2, 3, 4],
     }
 
     # create grid search object
@@ -153,8 +153,8 @@ def main():
               'as the first argument and the filepath of the pickle file to ' \
               'save the model to as the second argument. \n\nExample: python ' \
               'train_classifier.py ../data/DisasterResponse.db classifier.pkl')
-        # database_filepath 'sqlite:///DisasterResponse.db'
-        # model classifier.pkl
+        # database_filepath '../data/preprocessed_data.csv
+        # model model.pkl
 
 
 if __name__ == '__main__':
