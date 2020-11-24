@@ -4,7 +4,6 @@ from typing import Tuple, List
 import pandas as pd
 import numpy as np
 import joblib
-from sklearn.multioutput import MultiOutputClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline, FeatureUnion
@@ -149,12 +148,12 @@ def main():
         print('Trained model saved!')
 
     else:
-        print('Please provide the filepath of the disaster messages database ' \
+        print('Please provide the filepath of the raw data containing tweets' \
               'as the first argument and the filepath of the pickle file to ' \
               'save the model to as the second argument. \n\nExample: python ' \
-              'train_classifier.py ../data/DisasterResponse.db classifier.pkl')
-        # database_filepath '../data/preprocessed_data.csv
-        # model model.pkl
+              'model.py ../data/Tweets.csv model.pkl')
+        # data_filepath '../data/preprocessed_data.csv
+        # model_filepath model.pkl
 
 
 if __name__ == '__main__':
