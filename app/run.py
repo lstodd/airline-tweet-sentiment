@@ -87,14 +87,14 @@ def go():
     query = request.args.get('query', '')
 
     # use model to predict classification for query
-    classification_labels = model.predict([query])[0]
-    classification_results = dict(zip(df.columns[4:], classification_labels))
+    classification_label = model.predict([query])[0]
+    categories_dict = {"neutral": 0, "positive": 0, "negative": 0, classification_label: 1}
 
     # This will render the go.html Please see that file.
     return render_template(
         'go.html',
         query=query,
-        classification_result=classification_results
+        category_dict=categories_dict
     )
 
 
