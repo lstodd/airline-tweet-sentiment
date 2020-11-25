@@ -20,6 +20,10 @@ https://www.kaggle.com/crowdflower/twitter-airline-sentiment
 Data has been saved in this repository:
 **data/Tweets.csv**
 
+![Classify](/app/screenshots/sentiment_histogram.PNG)
+
+![Classify](/app/screenshots/airline_histogram.PNG)
+
 ## Model
 
 We create a multi class model.
