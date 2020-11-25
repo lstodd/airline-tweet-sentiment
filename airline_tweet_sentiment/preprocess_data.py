@@ -62,7 +62,7 @@ def main():
               'as the first argument, as ' \
               'well as the cleaned filepath to save the cleaned data ' \
               'to as the second argument. \n\nExample: python process_data.py ' \
-              'tweets.csv cleaned_tweets.csv')
+              'tweets.csv preprocessed_data.csv')
 
 
 if __name__ == '__main__':
