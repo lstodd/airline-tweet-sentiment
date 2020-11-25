@@ -14,7 +14,7 @@ from airline_tweet_sentiment.model import tokenize, StartingNounExtractor
 app = Flask(__name__)
 
 # load data
-df = pd.read_csv(os.path.join("..", "data", "preprocessed_data.csv"))
+df = pd.read_csv(os.path.join("..", "data", "Tweets.csv"))
 
 # load model
 model = joblib.load(os.path.join("..", "model.pkl"))
@@ -24,12 +24,14 @@ model = joblib.load(os.path.join("..", "model.pkl"))
 @app.route('/')
 @app.route('/index')
 def index():
+    opacity = 0.5
+
     # extract data needed for visuals
     sentiment_counts = df.airline_sentiment.value_counts()
     sentiment_names = list(sentiment_counts.index)
 
-    sentiment_counts = df.airline_sentiment.value_counts()
-    sentiment_names = list(sentiment_counts.index)
+    airline_counts = df.airline.value_counts()
+    airline_names = list(airline_counts.index)
 
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
@@ -38,14 +40,15 @@ def index():
             'data': [
                 Bar(
                     x=sentiment_names,
-                    y=sentiment_counts
+                    y=sentiment_counts,
+                    opacity=opacity
                 )
             ],
 
             'layout': {
                 'title': 'Histogram of Sentiments',
                 'yaxis': {
-                    'title': "Count"
+                    'title': "No. of Tweets"
                 },
                 'xaxis': {
                     'title': "Sentiment"
@@ -55,18 +58,20 @@ def index():
         {
             'data': [
                 Bar(
-                    x=sentiment_names,
-                    y=sentiment_counts
+                    x=airline_names,
+                    y=airline_counts,
+                    opacity=opacity
+
                 )
             ],
 
             'layout': {
-                'title': 'Histogram of Sentiments',
+                'title': 'Histogram of Airlines',
                 'yaxis': {
-                    'title': "Count"
+                    'title': "No. of Tweets"
                 },
                 'xaxis': {
-                    'title': "Sentiment"
+                    'title': "Airline"
                 }
             }
         }
