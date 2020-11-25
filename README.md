@@ -42,7 +42,18 @@ Run the following commands in the project's root directory to set up your databa
 
     Go to http://localhost:3001
 
+## Web App
+
+To classify a new message using the trained model you can enter a message on the web app:
+
+![Classify](/app/screenshots/classify_tweet.PNG)
+
+After clicking the 'classify' button, you will see the selected categories for your message highlighted in green:
+
+![Sentiment](/app/screenshots/highlighted_sentiment.PNG)
+
 ## Conclusion
+# TODO add feature importance note
 
 ### Reflection
 
