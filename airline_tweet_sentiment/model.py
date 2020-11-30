@@ -26,7 +26,7 @@ class StartingNounExtractor(BaseEstimator, TransformerMixin):
     def starting_noun(self, text: str):
         sentence_list = nltk.sent_tokenize(text)
         for sentence in sentence_list:
-            pos_tags = nltk.pos_tag(_tokenize(sentence))
+            pos_tags = nltk.pos_tag(tokenize(sentence))
             first_word, first_tag = pos_tags[0]
             if first_tag in ['NN', 'NNS']:
                 return True
@@ -53,7 +53,7 @@ def _load_data(data_filepath: str) -> Tuple[np.array, np.array, np.array]:
     return X, y
 
 
-def _tokenize(text: str) -> List[str]:
+def tokenize(text: str) -> List[str]:
     """
     Lowers and splits a string up into separate tokens.
     :param text: Raw string to tokenize.
@@ -79,7 +79,7 @@ def _build_model() -> GridSearchCV:
         ('features', FeatureUnion([
 
             ('text_pipeline', Pipeline([
-                ('vect', CountVectorizer(tokenizer=_tokenize)),
+                ('vect', CountVectorizer(tokenizer=tokenize)),
                 ('tfidf', TfidfTransformer())
             ])),
 
