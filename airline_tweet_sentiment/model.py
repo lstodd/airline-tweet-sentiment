@@ -14,7 +14,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.base import BaseEstimator, TransformerMixin
 import nltk
 
-from airline_tweet_sentiment.config import Config
+from airline_tweet_sentiment.config import Config, Paths, Files
 
 nltk.download(['punkt', 'wordnet', 'averaged_perceptron_tagger'])
 
@@ -27,7 +27,7 @@ class StartingNounExtractor(BaseEstimator, TransformerMixin):
     def starting_noun(self, text: str):
         sentence_list = nltk.sent_tokenize(text)
         for sentence in sentence_list:
-            pos_tags = nltk.pos_tag(tokenize(sentence))
+            pos_tags = nltk.pos_tag(_tokenize(sentence))
             first_word, first_tag = pos_tags[0]
             if first_tag in ['NN', 'NNS']:
                 return True
@@ -41,7 +41,7 @@ class StartingNounExtractor(BaseEstimator, TransformerMixin):
         return pd.DataFrame(X_tagged)
 
 
-def load_data(data_filepath: str) -> Tuple[np.array, np.array, np.array]:
+def _load_data(data_filepath: str) -> Tuple[np.array, np.array, np.array]:
     """
     Load the training data from the SQLite database.
     :param data_filepath: Database name to load cleaned data from.
@@ -54,7 +54,7 @@ def load_data(data_filepath: str) -> Tuple[np.array, np.array, np.array]:
     return X, y
 
 
-def tokenize(text: str) -> List[str]:
+def _tokenize(text: str) -> List[str]:
     """
     Lowers and splits a string up into separate tokens.
     :param text: Raw string to tokenize.
@@ -71,7 +71,7 @@ def tokenize(text: str) -> List[str]:
     return clean_tokens
 
 
-def build_model() -> GridSearchCV:
+def _build_model() -> GridSearchCV:
     """
     Build the sklearn model pipeline with paramters to grid search over.
     :return: Sklearn grid searchable pipeline.
@@ -80,7 +80,7 @@ def build_model() -> GridSearchCV:
         ('features', FeatureUnion([
 
             ('text_pipeline', Pipeline([
-                ('vect', CountVectorizer(tokenizer=tokenize)),
+                ('vect', CountVectorizer(tokenizer=_tokenize)),
                 ('tfidf', TfidfTransformer())
             ])),
 
@@ -103,7 +103,7 @@ def build_model() -> GridSearchCV:
     return cv
 
 
-def evaluate_model(model, X_test, y_test):
+def _evaluate_model(model, X_test, y_test):
     """
     Returns the best parameters from a grid search.
     :param model: Trained model.
@@ -115,14 +115,14 @@ def evaluate_model(model, X_test, y_test):
 
     report = classification_report(y_test, y_pred, output_dict=True)
     df_report = pd.DataFrame(report).transpose()
-    df_report.to_csv("metrics.csv")
+    df_report.to_csv(os.path.join(Paths.data_path, Files.metrics_file))
 
     print(df_report)
 
     print("\nBest Parameters:", model.best_params_)
 
 
-def save_model(model: GridSearchCV, model_filepath: str) -> None:
+def _save_model(model: GridSearchCV, model_filepath: str) -> None:
     """
     Save the serialised model object.
     :param model: Model object.
@@ -131,35 +131,21 @@ def save_model(model: GridSearchCV, model_filepath: str) -> None:
     joblib.dump(model, model_filepath)
 
 
-def main():
-    if len(sys.argv) == 3:
-        data_filepath, model_filepath = sys.argv[1:]
-        print(f"Loading data...{data_filepath}")
-        X, y = load_data(data_filepath)
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25)
+def create_model(data_filepath: str, model_filepath: str):
+    print(f"Loading data...{data_filepath}")
+    X, y = _load_data(data_filepath)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25)
 
-        print('Building model...')
-        model = build_model()
+    print('Building model...')
+    model = _build_model()
 
-        print('Training model...')
-        model.fit(X_train, y_train)
+    print('Training model...')
+    model.fit(X_train, y_train)
 
-        print('Evaluating model...')
-        evaluate_model(model, X_test, y_test)
+    print('Evaluating model...')
+    _evaluate_model(model, X_test, y_test)
 
-        print('Saving model...\n    MODEL: {}'.format(model_filepath))
-        save_model(model, model_filepath)
+    print('Saving model...\n    MODEL: {}'.format(model_filepath))
+    _save_model(model, model_filepath)
 
-        print('Trained model saved!')
-
-    else:
-        print('Please provide the filepath of the raw data containing tweets' \
-              'as the first argument and the filepath of the pickle file to ' \
-              'save the model to as the second argument. \n\nExample: python ' \
-              'model.py ../data/Tweets.csv model.pkl')
-        # data_filepath '../data/preprocessed_data.csv
-        # model_filepath model.pkl
-
-
-if __name__ == '__main__':
-    main()
+    print('Trained model saved!')

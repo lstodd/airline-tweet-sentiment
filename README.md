@@ -37,6 +37,14 @@ We create a multi class model.
 * scikit-learn
 
 ## Running
+
+To run the luigi pipeline:
+
+1. First create a venv with the requirements installed.
+1. Start the luigi scheduler by running the following command in a terminal
+    ```luigid --port 8082```
+1. Run the ```run.py``` script from the top directory to run the pipeline
+
 Run the following commands in the project's root directory to set up your database and model.
 
 1. To run ETL pipeline that cleans data and stores in database python airline_tweet_sentiment/process_data.py data/Tweets.csv data/preprocessed_data.csv

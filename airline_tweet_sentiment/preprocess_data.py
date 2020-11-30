@@ -7,7 +7,7 @@ from airline_tweet_sentiment.config import Config
 
 # TODO add docstrings for functions
 
-def load_data(tweet_file: str) -> pd.DataFrame:
+def _load_data(tweet_file: str) -> pd.DataFrame:
     """
     Load tweet data from file.
 
@@ -19,7 +19,7 @@ def load_data(tweet_file: str) -> pd.DataFrame:
     return df
 
 
-def clean_data(df: pd.DataFrame) -> pd.DataFrame:
+def _clean_data(df: pd.DataFrame) -> pd.DataFrame:
     """
     Preprocess categories into separate columns.
     :param df: Raw DataFrame containing single column for all labels.
@@ -31,7 +31,7 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def save_data(df, cleaned_file) -> None:
+def _save_data(df, cleaned_file) -> None:
     """
     Save DataFrame to SQL engine.
     :param df: Cleaned DataFrame.
@@ -41,29 +41,15 @@ def save_data(df, cleaned_file) -> None:
     df.to_csv(cleaned_file, index=False)
 
 
-def main():
-    if len(sys.argv) == 3:
+def preprocess(tweet_file: str, cleaned_file: str):
 
-        tweet_file, cleaned_file = sys.argv[1:]
+    print(f"Loading data from {tweet_file}")
+    df = _load_data(tweet_file)
 
-        print(f"Loading data from {tweet_file}")
-        df = load_data(tweet_file)
+    print('Cleaning data...')
+    df = _clean_data(df)
 
-        print('Cleaning data...')
-        df = clean_data(df)
+    print(f"Saving data to {cleaned_file}")
+    _save_data(df, cleaned_file)
 
-        print(f"Saving data to {cleaned_file}")
-        save_data(df, cleaned_file)
-
-        print('Cleaned data saved to database!')
-
-    else:
-        print('Please provide the filepaths of the tweets' \
-              'as the first argument, as ' \
-              'well as the cleaned filepath to save the cleaned data ' \
-              'to as the second argument. \n\nExample: python process_data.py ' \
-              'tweets.csv preprocessed_data.csv')
-
-
-if __name__ == '__main__':
-    main()
+    print('Cleaned data saved to database!')
