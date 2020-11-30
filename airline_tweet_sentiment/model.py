@@ -1,4 +1,5 @@
 import sys
+import os
 from typing import Tuple, List
 
 import pandas as pd
@@ -108,11 +109,15 @@ def evaluate_model(model, X_test, y_test):
     :param model: Trained model.
     :param X_test: Data for features.
     :param y_test: Actual labels to check against.
-    :param category_names: Named of predicted labels.
     :return: Return the parameters of the best model from grid search.
     """
     y_pred = model.predict(X_test)
-    print(classification_report(y_test, y_pred))
+
+    report = classification_report(y_test, y_pred, output_dict=True)
+    df_report = pd.DataFrame(report).transpose()
+    df_report.to_csv("metrics.csv")
+
+    print(df_report)
 
     print("\nBest Parameters:", model.best_params_)
 

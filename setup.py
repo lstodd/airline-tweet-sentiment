@@ -6,7 +6,7 @@ rootdir = os.path.abspath(os.path.dirname(__file__))
 long_description = open(os.path.join(rootdir, 'README.md')).read()
 
 setuptools.setup(
-    name="airline-tweet-sentiment",
+    name="airline_tweet_sentiment",
     version="0.1",
     author="Laura Stoddart",
     author_email="laurastoddart@hotmail.com",
