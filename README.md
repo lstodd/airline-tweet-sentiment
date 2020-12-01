@@ -3,9 +3,12 @@
 This project can be found on GitHub here:
 https://github.com/lstodd/airline-tweet-sentiment
 
-This project uses Luigi to run the scripts. The main actors to review include:
+This project uses Luigi to run the script from tasks.py.
+
+The main scripts to review include:
 * airline_tweet_sentiment/preprocess_data.py
 * airline_tweet_sentiment/model.py
+* app/run.py
 
 ## Project overview
 
