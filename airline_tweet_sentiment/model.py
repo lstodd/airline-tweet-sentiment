@@ -4,7 +4,7 @@ from typing import Tuple, List
 import pandas as pd
 import numpy as np
 import joblib
-from sklearn.ensemble import RandomForestClassifier
+from xgboost.sklearn import XGBClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline, FeatureUnion
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
@@ -86,14 +86,20 @@ def _build_model() -> GridSearchCV:
             ('starting_noun', StartingNounExtractor())
         ])),
 
-        ('clf', RandomForestClassifier())
+        ('mod', XGBClassifier())
     ])
 
     # specify parameters for grid search
     parameters = {
         'features__text_pipeline__tfidf__smooth_idf': (True, False),
-        # 'clf__estimator__warm_start': (True, False),
-        # 'clf__estimator__min_samples_leaf': [2, 3, 4],
+        'mod__gamma': 2.0 ** np.arange(-1, 1),
+        'mod__max_depth': np.arange(2, 7, 2),  # Default 6
+        'mod__subsample': [0.5, 1],  # Default 1
+        'mod__colsample_bytree': [0.8, 1],  # Default 1
+        'mod__colsample_bynode': [0.8, 1],  # Default 1
+        'mod__reg_alpha': np.arange(0, 6, 2),
+        'mod__min_child_weight': np.arange(1, 4, 1),
+        'mod__reg_lambda': np.arange(0, 6, 2)
     }
 
     # create grid search object

@@ -7,3 +7,4 @@ scikit-learn
 flask
 plotly
 luigi
+xgboost

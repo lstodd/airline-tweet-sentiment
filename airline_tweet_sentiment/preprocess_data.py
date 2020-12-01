@@ -27,6 +27,7 @@ def _clean_data(df: pd.DataFrame) -> pd.DataFrame:
     """
 
     df = df[[Config.target_col, Config.tweet_col]]
+    df.loc[~(df[Config.target_col] == Config.target_negative_value), Config.target_col] = Config.target_other_value
 
     return df
 
@@ -42,7 +43,6 @@ def _save_data(df, cleaned_file) -> None:
 
 
 def preprocess(tweet_file: str, cleaned_file: str):
-
     print(f"Loading data from {tweet_file}")
     df = _load_data(tweet_file)
 
