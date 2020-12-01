@@ -1,4 +1,8 @@
 # airline-tweet-sentiment
+
+This project can be found on GitHub here:
+https://github.com/lstodd/airline-tweet-sentiment
+
 Classifying tweets about airlines into positive, negative and neutral. 
 
 With an increasing social media presence for airlines, there is a demand for immediate responses to issues that may 
