@@ -3,6 +3,12 @@
 This project can be found on GitHub here:
 https://github.com/lstodd/airline-tweet-sentiment
 
+This project uses Luigi to run the scripts. The main actors to review include:
+* airline_tweet_sentiment/preprocess_data.py
+* airline_tweet_sentiment/model.py
+
+## Project overview
+
 Classifying tweets about airlines into positive, negative and neutral. 
 
 With an increasing social media presence for airlines, there is a demand for immediate responses to issues that may 
