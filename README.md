@@ -30,7 +30,7 @@ Data has been saved in this repository:
 
 ## Model
 
-We create a multi binary model using XGBoost.
+We create a multi binary model using XGBoost. We create feature for the starting noun of a tweet to help us with the sentiment. 
 
 ## Requirements:
 * pandas
@@ -67,9 +67,23 @@ After clicking the 'classify' button, you will see the selected categories for y
 ![Sentiment](/app/screenshots/highlighted_sentiment.PNG)
 
 ## Conclusion
-# TODO add feature importance note
+We have a good overall precision for picking up negative tweets, however, we might want to improve on this model before
+deploying in the real world. Missing negative tweets can have bad consequences for a company PR. 
 
-### Reflection
+## Reflection
+We have good performance with only minor preprocessing of the data. Using the web app to test new messages seems to 
+work well with spot checks. 
 
-### Improvement
+The model took a very long time to train with a large grid for cross validation. 
 
+## Improvement
+In terms of the repository as a whole, I would propose to add tests so we can ensure the code is working as it is 
+supposed to. 
+
+We could add more preprocessing on the text to generate more interesting Natural Language Processing (NLP) indicators 
+for the model to learn from. We could also make sure to split the data for different airlines equally between the 
+test/train samples to ensure we perform well on all airlines. To this end, we could even report the performance metrics 
+per airline. 
+
+To improve on model training time for a larget hyperparameter grid, we could try and use a parallised approach for
+ searching for the optimum parameters. 
