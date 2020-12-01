@@ -92,14 +92,9 @@ def _build_model() -> GridSearchCV:
     # specify parameters for grid search
     parameters = {
         'features__text_pipeline__tfidf__smooth_idf': (True, False),
-        'mod__gamma': 2.0 ** np.arange(-1, 1),
         'mod__max_depth': np.arange(2, 7, 2),  # Default 6
-        'mod__subsample': [0.5, 1],  # Default 1
-        'mod__colsample_bytree': [0.8, 1],  # Default 1
         'mod__colsample_bynode': [0.8, 1],  # Default 1
-        'mod__reg_alpha': np.arange(0, 6, 2),
-        'mod__min_child_weight': np.arange(1, 4, 1),
-        'mod__reg_lambda': np.arange(0, 6, 2)
+        'mod__min_child_weight': np.arange(1, 4, 1)
     }
 
     # create grid search object
