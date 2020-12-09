@@ -43,7 +43,7 @@ Data has been saved in this repository:
 
 ## Model
 
-We create a multi binary model using XGBoost. We create feature for the starting noun of a tweet to help us with the sentiment. 
+We create a multi class model using XGBoost. We create feature for the starting noun of a tweet to help us with the sentiment. 
 
 ## Requirements:
 * pandas
